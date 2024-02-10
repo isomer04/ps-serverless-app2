@@ -1,5 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { AssetStorage } from './storage';
+import { WebApp } from './webapp';
+
 
 export class ApplicationStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -9,6 +11,10 @@ export class ApplicationStack extends cdk.Stack {
     //   value: 'Hey, it worked!'
     // });
 
-    new AssetStorage(this, 'Storage');
+    const storage = new AssetStorage(this, 'Storage');
+
+    new WebApp(this, 'WebApp', {
+      hostingBucket: storage.hostingBucket
+    });
   }
 }
